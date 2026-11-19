@@ -1,12 +1,12 @@
-# 🌐 Hierarchical Edge Auto-Scaling System
+# Hierarchical Edge Autoscaling Prototype
 
 [![Python](https://img.shields.io/badge/Python-3.9-blue.svg)](https://www.python.org/)
 [![Docker](https://img.shields.io/badge/Docker-Supported-2496ED.svg)](https://www.docker.com/)
 [![Flask](https://img.shields.io/badge/Flask-Microservices-lightgrey.svg)](https://flask.palletsprojects.com/)
 
-Welcome to the official repository for my Computer Science M.Sc. thesis: **"A Proactive Container-based Auto-scaling Approach for a Hierarchical Orchestration Framework for Edge Computing."**
+An experimental implementation of **A Proactive Container-based Auto-scaling Approach for a Hierarchical Orchestration Framework for Edge Computing**. Python and Flask services model a central cloud, cluster managers, and edge workers. The prototype explores how each layer can handle demand spikes through local capacity, nearby clusters, and cloud fallback.
 
-This project tackles the inherent resource limitations of Edge Computing. When localized edge clusters face traffic bursts, they quickly saturate. This system introduces a **Vicinity-Aware, 3-Layer Hierarchical Scaling Engine** that dynamically offloads tasks to geographic neighbors or the central cloud before any degradation in Quality of Service (QoS) occurs.
+This repository demonstrates the service-based architecture. For simulator-based evaluation and reproducible comparisons, see the [companion research repository](https://github.com/Sky-himself/vicinity-aware-autoscaling).
 
 ---
 
@@ -90,7 +90,7 @@ Run the simulation:
 python simulate_thesis_trace.py
 ```
 
-### 3. Observe the Magic
+### 3. Inspect the Simulation Output
 As the simulation runs, you will see the system gracefully navigate capacity limits:
 *   `[Minute X] Demand: 3.5 > Current: 1.0 | Scaling UP...`
 *   `[Cluster 1] All Local Workers Full. Trying Vicinity...`
@@ -101,7 +101,7 @@ The final state and scaling decisions per minute will be saved to `thesis_simula
 ---
 
 ## 🤝 Contribution & Feedback
-This repository houses my ongoing M.Sc. thesis project. While the core algorithms are complete, I am always open to architectural discussions, optimization ideas, and networking!
+For architectural context and experiment notes, see [the recorded analysis](output%20and%20analysis_v4.md).
 
 Feel free to open an issue or reach out if you're interested in Fog/Edge computing, Docker orchestration, or predictive auto-scaling.
 
