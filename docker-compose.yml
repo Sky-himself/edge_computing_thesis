@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # --- Layer 1: Cloud / Central Node ---
   central_node:
@@ -9,7 +7,7 @@ services:
       - NODE_TYPE=central
       - NODE_ID=main
     ports:
-      - "5000:5000"  # Access: http://localhost:5000
+      - "127.0.0.1:5000:5000"  # Access: http://localhost:5000
     networks:
       - edge_network
 
@@ -22,7 +20,7 @@ services:
       - NODE_ID=1
       - PARENT_NODE=central_node
     ports:
-      - "5001:5000"  # Access: http://localhost:5001
+      - "127.0.0.1:5001:5000"  # Access: http://localhost:5001
     networks:
       - edge_network
 
@@ -34,7 +32,7 @@ services:
       - NODE_ID=2
       - PARENT_NODE=central_node
     ports:
-      - "5002:5000"  # Access: http://localhost:5002
+      - "127.0.0.1:5002:5000"  # Access: http://localhost:5002
     networks:
       - edge_network
 
@@ -46,7 +44,7 @@ services:
       - NODE_ID=3
       - PARENT_NODE=central_node
     ports:
-      - "5003:5000"  # Access: http://localhost:5003
+      - "127.0.0.1:5003:5000"  # Access: http://localhost:5003
     networks:
       - edge_network
 
@@ -62,7 +60,7 @@ services:
       - RESOURCES_CPU=4
       - RESOURCES_RAM=8192
     ports:
-      - "5004:5000"  # Access: http://localhost:5004
+      - "127.0.0.1:5004:5000"  # Access: http://localhost:5004
     networks:
       - edge_network
 
@@ -76,7 +74,7 @@ services:
       - RESOURCES_CPU=2
       - RESOURCES_RAM=4096
     ports:
-      - "5005:5000"  # Access: http://localhost:5005
+      - "127.0.0.1:5005:5000"  # Access: http://localhost:5005
     networks:
       - edge_network
 
@@ -91,7 +89,7 @@ services:
       - RESOURCES_CPU=4
       - RESOURCES_RAM=8192
     ports:
-      - "5006:5000"  # Access: http://localhost:5006
+      - "127.0.0.1:5006:5000"  # Access: http://localhost:5006
     networks:
       - edge_network
 
@@ -105,7 +103,7 @@ services:
       - RESOURCES_CPU=2
       - RESOURCES_RAM=4096
     ports:
-      - "5007:5000"  # Access: http://localhost:5007
+      - "127.0.0.1:5007:5000"  # Access: http://localhost:5007
     networks:
       - edge_network
 
@@ -120,7 +118,7 @@ services:
       - RESOURCES_CPU=4
       - RESOURCES_RAM=8192
     ports:
-      - "5008:5000"  # Access: http://localhost:5008
+      - "127.0.0.1:5008:5000"  # Access: http://localhost:5008
     networks:
       - edge_network
 
@@ -134,7 +132,7 @@ services:
       - RESOURCES_CPU=2
       - RESOURCES_RAM=4096
     ports:
-      - "5009:5000"  # Access: http://localhost:5009
+      - "127.0.0.1:5009:5000"  # Access: http://localhost:5009
     networks:
       - edge_network
 

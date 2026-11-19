@@ -26,11 +26,9 @@ def register_with_cluster():
     """Registers this worker with its parent cluster manager."""
     time.sleep(3)
     cluster_url = f"http://{PARENT_CLUSTER}:5000/register_worker"
-    my_url = f"http://{os.getenv('HOSTNAME')}:5000"
 
     payload = {
         "worker_id": NODE_ID,
-        "worker_url": my_url,
         "capacity": { "cpu": TOTAL_CPU, "ram": TOTAL_RAM }
     }
     try:

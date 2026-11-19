@@ -11,6 +11,16 @@ app = Flask(__name__)
 NODE_ID = os.getenv('NODE_ID', 'unknown')
 PARENT_NODE = os.getenv('PARENT_NODE', 'central_node')
 
+# Trusted worker IDs and Compose DNS names for the default topology.
+WORKER_ENDPOINTS = {
+    '1_c1': 'http://edge_1_c1:5000',
+    '2_c1': 'http://edge_2_c1:5000',
+    '3_c2': 'http://edge_3_c2:5000',
+    '4_c2': 'http://edge_4_c2:5000',
+    '5_c3': 'http://edge_5_c3:5000',
+    '6_c3': 'http://edge_6_c3:5000',
+}
+
 # State
 MY_VICINITY = []
 WORKERS = {}
@@ -67,22 +77,28 @@ def health_check():
 
 @app.route('/update_vicinity', methods=['POST'])
 def update_vicinity():
-    data = request.json
-    if 'neighbors' in data:
-        MY_VICINITY[:] = data['neighbors']
-        print(f"[{NODE_ID}] Updated Vicinity: {MY_VICINITY}")
-        return jsonify({"status": "success"}), 200
-    return jsonify({"error": "missing data"}), 400
+    data = request.get_json(silent=True)
+    neighbors = data.get('neighbors') if isinstance(data, dict) else None
+    configured = [url for cid, url in CLUSTER_URLS.items() if cid != NODE_ID]
+    if not isinstance(neighbors, list) or any(url not in configured for url in neighbors):
+        return jsonify({"error": "invalid cluster neighbors"}), 400
+    MY_VICINITY[:] = neighbors
+    print(f"[{NODE_ID}] Updated Vicinity: {MY_VICINITY}")
+    return jsonify({"status": "success"}), 200
 
 @app.route('/register_worker', methods=['POST'])
 def register_worker():
-    data = request.json
-    w_id = data['worker_id']
-    WORKERS[w_id] = {
-        "url": data['worker_url'],
-        "capacity": data['capacity']
-    }
-    print(f"[{NODE_ID}] Worker registered: {w_id}")
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return jsonify({"error": "invalid worker registration"}), 400
+    worker_id = data.get('worker_id')
+    capacity = data.get('capacity')
+    if (not isinstance(worker_id, str) or worker_id not in WORKER_ENDPOINTS
+            or get_worker_cluster_id(worker_id) != NODE_ID
+            or not isinstance(capacity, dict)):
+        return jsonify({"error": "invalid worker registration"}), 400
+    WORKERS[worker_id] = {"url": WORKER_ENDPOINTS[worker_id], "capacity": capacity}
+    print(f"[{NODE_ID}] Worker registered: {worker_id}")
     return jsonify({"status": "registered"}), 200
 
 @app.route('/cluster_resources')

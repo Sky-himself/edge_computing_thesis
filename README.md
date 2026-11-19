@@ -107,3 +107,13 @@ Feel free to open an issue or reach out if you're interested in Fog/Edge computi
 
 **Author**: [Ehsan Moradi](https://www.linkedin.com/in/its-ehsan-moradi)<br>
 **Advisor**: [S.A. Javadi](https://ir.linkedin.com/in/sajavadi)
+
+## Running the simulator safely
+
+The default Compose ports listen on `127.0.0.1` so the host-side simulation
+scripts can still reach every node. Containers communicate over the Compose
+network. Keep this unauthenticated simulator on a trusted local machine.
+When changing the topology, update the worker IDs and service names in
+`cluster_node/app.py` alongside the Compose configuration. Cluster managers
+only use the configured worker and neighbor addresses. A network deployment
+requires authenticated control requests and protected transport.
